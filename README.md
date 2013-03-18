@@ -59,6 +59,7 @@ Andrei Solovjev
 
 - https://github.com/andrei200287
 - andrei@solovjev.com
+- http://solovjev.com
 
 ## License
 SAVideoRangeSlider is available under the MIT license. See the LICENSE file for more info.
