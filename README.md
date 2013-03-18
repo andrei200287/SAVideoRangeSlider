@@ -1,0 +1,4 @@
+SAVideoRangeSlider
+==================
+
+Video trim control
