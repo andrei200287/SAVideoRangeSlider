@@ -25,7 +25,7 @@ Video trim control.
 
 ## Installation
 
-1. Drop `ControlName` files into your project.
+1. Drop `SAVideoRangeSlider` files into your project.
 2. Add `QuartzCore.framework`, `AVFoundation.framework`, `CoreMedia.framework` to your project.
 3. Add `#import "SAVideoRangeSlider.h"` to use it in a class.
 
