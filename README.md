@@ -3,6 +3,7 @@
 
 Video trim control.
 
+## Screens
 ![SAVideoRangeSlider screen](http://solovjev.com/libs/SAVideoRangeSlider/yellow_ipad.png "SAVideoRangeSlider screen")
 ![SAVideoRangeSlider screen](http://solovjev.com/libs/SAVideoRangeSlider/gray_ipad.png "SAVideoRangeSlider screen")
 ![SAVideoRangeSlider screen](http://solovjev.com/libs/SAVideoRangeSlider/purple_ipad.png "SAVideoRangeSlider screen")
@@ -15,6 +16,9 @@ Video trim control.
 ![SAVideoRangeSlider screen](http://solovjev.com/libs/SAVideoRangeSlider/purple_iphone.png "SAVideoRangeSlider screen")
 
 ![SAVideoRangeSlider screen](http://solovjev.com/libs/SAVideoRangeSlider/green_iphone.png "SAVideoRangeSlider screen")
+
+## Youtube video
+[![SAVideoRangeSlider youtube](http://solovjev.com/libs/SAVideoRangeSlider/youtube-savideorangeslider.png "Youtube demo")](http://youtu.be/icyx4DMLu6k)  
 
 
 
