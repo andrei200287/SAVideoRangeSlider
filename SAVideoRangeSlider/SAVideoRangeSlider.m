@@ -157,6 +157,19 @@
 }
 
 
+-(void)setMaxGap:(NSInteger)maxGap{
+    _leftPosition = 0;
+    _rightPosition = _frame_width*maxGap/_durationSeconds;
+    _maxGap = maxGap;
+}
+
+-(void)setMinGap:(NSInteger)minGap{
+    _leftPosition = 0;
+    _rightPosition = _frame_width*minGap/_durationSeconds;
+    _minGap = minGap;
+}
+
+
 - (void)delegateNotification
 {
     if ([_delegate respondsToSelector:@selector(videoRange:didChangeLeftPosition:rightPosition:)]){
@@ -181,7 +194,11 @@
             _leftPosition = 0;
         }
         
-        if (_rightPosition-_leftPosition <= _leftThumb.frame.size.width+_rightThumb.frame.size.width){
+        if (
+            (_rightPosition-_leftPosition <= _leftThumb.frame.size.width+_rightThumb.frame.size.width) ||
+            ((self.maxGap > 0) && (self.rightPosition-self.leftPosition > self.maxGap)) ||
+            ((self.minGap > 0) && (self.rightPosition-self.leftPosition < self.minGap))
+            ){
             _leftPosition -= translation.x;
         }
         
@@ -222,7 +239,9 @@
             _rightPosition -= translation.x;
         }
         
-        if (_rightPosition-_leftPosition <= _leftThumb.frame.size.width+_rightThumb.frame.size.width){
+        if ((_rightPosition-_leftPosition <= _leftThumb.frame.size.width+_rightThumb.frame.size.width) ||
+            ((self.maxGap > 0) && (self.rightPosition-self.leftPosition > self.maxGap)) ||
+            ((self.minGap > 0) && (self.rightPosition-self.leftPosition < self.minGap))){
             _rightPosition -= translation.x;
         }
         

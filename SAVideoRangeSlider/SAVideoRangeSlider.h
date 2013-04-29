@@ -43,6 +43,8 @@
 @property (nonatomic, strong) UILabel *bubleText;
 @property (nonatomic, strong) UIView *topBorder;
 @property (nonatomic, strong) UIView *bottomBorder;
+@property (nonatomic, assign) NSInteger maxGap;
+@property (nonatomic, assign) NSInteger minGap;
 
 
 - (id)initWithFrame:(CGRect)frame videoUrl:(NSURL *)videoUrl;
