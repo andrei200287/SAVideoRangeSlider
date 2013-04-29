@@ -40,6 +40,8 @@ iOS UI Control Providing An iMovie Style Video Trim Control.
 SAVideoRangeSlider *mySAVideoRangeSlider = [[SAVideoRangeSlider alloc] initWithFrame:CGRectMake(10, 200, self.view.frame.size.width-20, 70) videoUrl:videoFileUrl ];
 [mySAVideoRangeSlider setPopoverBubbleSize:200 height:100];
 mySAVideoRangeSlider.delegate = self;
+self.mySAVideoRangeSlider.minGap = 10; // optional, seconds
+self.mySAVideoRangeSlider.maxGap = 30; // optional, seconds
 [self.view addSubview:mySAVideoRangeSlider];
 ```
 
