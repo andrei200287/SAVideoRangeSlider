@@ -1,7 +1,7 @@
 # SAVideoRangeSlider
 ======
 
-Video trim control.
+iOS UI Control Providing An iMovie Style Video Trim Control.
 
 ## Screens
 ![SAVideoRangeSlider screen](http://solovjev.com/libs/SAVideoRangeSlider/yellow_ipad.png "SAVideoRangeSlider screen")
