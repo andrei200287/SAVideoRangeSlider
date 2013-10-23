@@ -16,3 +16,5 @@ profile
 *.moved-aside
 DerivedData
 .idea/
+
+SAVideoRangeSliderExample/SAVideoRangeSliderExample.xcodeproj/project.xcworkspace/xcuserdata/admin.xcuserdatad/UserInterfaceState.xcuserstate

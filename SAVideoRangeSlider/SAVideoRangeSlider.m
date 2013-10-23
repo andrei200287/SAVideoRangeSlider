@@ -365,6 +365,57 @@
     
     int time4Pic = 0;
     
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0){
+        // Bug iOS7 - generateCGImagesAsynchronouslyForTimes
+        
+        for (int i=1, ii=1; i<picsCnt; i++){
+            time4Pic = i*picWidth;
+            
+            CMTime timeFrame = CMTimeMakeWithSeconds(_durationSeconds*time4Pic/_bgView.frame.size.width, 600);
+            
+            [allTimes addObject:[NSValue valueWithCMTime:timeFrame]];
+            
+            
+            CGImageRef halfWayImage = [self.imageGenerator copyCGImageAtTime:timeFrame actualTime:&actualTime error:&error];
+            
+            UIImage *videoScreen;
+            if ([self isRetina]){
+                videoScreen = [[UIImage alloc] initWithCGImage:halfWayImage scale:2.0 orientation:UIImageOrientationUp];
+            } else {
+                videoScreen = [[UIImage alloc] initWithCGImage:halfWayImage];
+            }
+            
+            
+            
+            UIImageView *tmp = [[UIImageView alloc] initWithImage:videoScreen];
+            
+            int all = (ii+1)*tmp.frame.size.width;
+            
+            
+            CGRect currentFrame = tmp.frame;
+            currentFrame.origin.x = ii*currentFrame.size.width;
+            if (all > _bgView.frame.size.width){
+                int delta = all - _bgView.frame.size.width;
+                currentFrame.size.width -= delta;
+            }
+            tmp.frame = currentFrame;
+            ii++;
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [_bgView addSubview:tmp];
+            });
+            
+            
+            
+            
+            CGImageRelease(halfWayImage);
+            
+        }
+        
+        
+        return;
+    }
+    
     for (int i=1; i<picsCnt; i++){
         time4Pic = i*picWidth;
         
