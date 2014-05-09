@@ -337,7 +337,7 @@
         self.imageGenerator.maximumSize = CGSizeMake(_bgView.frame.size.width, _bgView.frame.size.height);
     }
     
-    int picWidth = 49;
+    int picWidth = 20;
     
     // First image
     NSError *error;
@@ -351,6 +351,9 @@
             videoScreen = [[UIImage alloc] initWithCGImage:halfWayImage];
         }
         UIImageView *tmp = [[UIImageView alloc] initWithImage:videoScreen];
+        CGRect rect=tmp.frame;
+        rect.size.width=picWidth;
+        tmp.frame=rect;
         [_bgView addSubview:tmp];
         picWidth = tmp.frame.size.width;
         CGImageRelease(halfWayImage);
@@ -367,7 +370,7 @@
     
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0){
         // Bug iOS7 - generateCGImagesAsynchronouslyForTimes
-        
+        int prefreWidth=0;
         for (int i=1, ii=1; i<picsCnt; i++){
             time4Pic = i*picWidth;
             
@@ -389,16 +392,25 @@
             
             UIImageView *tmp = [[UIImageView alloc] initWithImage:videoScreen];
             
-            int all = (ii+1)*tmp.frame.size.width;
             
             
             CGRect currentFrame = tmp.frame;
-            currentFrame.origin.x = ii*currentFrame.size.width;
+            currentFrame.origin.x = ii*picWidth;
+
+            currentFrame.size.width=picWidth;
+            prefreWidth+=currentFrame.size.width;
+            
+            if( i == picsCnt-1){
+                currentFrame.size.width-=6;
+            }
+            tmp.frame = currentFrame;
+            int all = (ii+1)*tmp.frame.size.width;
+
             if (all > _bgView.frame.size.width){
                 int delta = all - _bgView.frame.size.width;
                 currentFrame.size.width -= delta;
             }
-            tmp.frame = currentFrame;
+
             ii++;
             
             dispatch_async(dispatch_get_main_queue(), ^{
