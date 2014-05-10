@@ -51,7 +51,7 @@
     
     
     NSBundle *mainBundle = [NSBundle mainBundle];
-    self.originalVideoPath = [mainBundle pathForResource: @"IMG_0073" ofType: @"MOV"];
+    self.originalVideoPath = [mainBundle pathForResource: @"thaiPhuketKaronBeach" ofType: @"MOV"];
     NSURL *videoFileUrl = [NSURL fileURLWithPath:self.originalVideoPath];
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
