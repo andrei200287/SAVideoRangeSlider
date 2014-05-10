@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
-  s.name         = "VideoRangeSlider"
+  s.name         = "SAVideoRangeSlider"
   s.version      = "1.0"
-  s.summary      = "VideoRangeSlider"
+  s.summary      = "SAVideoRangeSlider"
   s.homepage     = "https://github.com/andrei200287/SAVideoRangeSlider"
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author       = { "Andrei" => "andrei@solovjev.com" }
