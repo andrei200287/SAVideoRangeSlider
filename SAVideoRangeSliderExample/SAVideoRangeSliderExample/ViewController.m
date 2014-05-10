@@ -51,19 +51,20 @@
     
     
     NSBundle *mainBundle = [NSBundle mainBundle];
-    self.originalVideoPath = [mainBundle pathForResource: @"thaiPhuketKaronBeach" ofType: @"MOV"];
+    self.originalVideoPath = [mainBundle pathForResource: @"IMG_0073" ofType: @"MOV"];
     NSURL *videoFileUrl = [NSURL fileURLWithPath:self.originalVideoPath];
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         
-        self.mySAVideoRangeSlider = [[SAVideoRangeSlider alloc] initWithFrame:CGRectMake(10, 200, self.view.frame.size.width-20, 70) videoUrl:videoFileUrl ];
+        self.mySAVideoRangeSlider = [[SAVideoRangeSlider alloc] initWithFrame:CGRectMake(10, 200, self.view.frame.size.width, 70) videoUrl:videoFileUrl ];
         [self.mySAVideoRangeSlider setPopoverBubbleSize:200 height:100];
         
     } else {
         
-        self.mySAVideoRangeSlider = [[SAVideoRangeSlider alloc] initWithFrame:CGRectMake(10, 100, self.view.frame.size.width-20, 50) videoUrl:videoFileUrl ];
+        self.mySAVideoRangeSlider = [[SAVideoRangeSlider alloc] initWithFrame:CGRectMake(0, 100, self.view.frame.size.width, 50) videoUrl:videoFileUrl ];
         self.mySAVideoRangeSlider.bubleText.font = [UIFont systemFontOfSize:12];
         [self.mySAVideoRangeSlider setPopoverBubbleSize:120 height:60];
+       // self.mySAVideoRangeSlider.maxGap=30;
         
     }
     

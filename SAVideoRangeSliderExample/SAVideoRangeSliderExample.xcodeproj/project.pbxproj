@@ -28,6 +28,8 @@
 		842D00DA16F7A68100BC2959 /* SASliderLeft.m in Sources */ = {isa = PBXBuildFile; fileRef = 842D00D416F7A68100BC2959 /* SASliderLeft.m */; };
 		842D00DB16F7A68100BC2959 /* SASliderRight.m in Sources */ = {isa = PBXBuildFile; fileRef = 842D00D616F7A68100BC2959 /* SASliderRight.m */; };
 		842D00DC16F7A68100BC2959 /* SAVideoRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 842D00D816F7A68100BC2959 /* SAVideoRangeSlider.m */; };
+		9EDFED28191D1FAA00528292 /* VideoRangeSlider.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9EDFED27191D1FAA00528292 /* VideoRangeSlider.podspec */; };
+		9EDFED2E191D4CAE00528292 /* IMG_0073.MOV in Resources */ = {isa = PBXBuildFile; fileRef = 9EDFED2D191D4CAE00528292 /* IMG_0073.MOV */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +63,8 @@
 		842D00D616F7A68100BC2959 /* SASliderRight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SASliderRight.m; sourceTree = "<group>"; };
 		842D00D716F7A68100BC2959 /* SAVideoRangeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SAVideoRangeSlider.h; sourceTree = "<group>"; };
 		842D00D816F7A68100BC2959 /* SAVideoRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAVideoRangeSlider.m; sourceTree = "<group>"; };
+		9EDFED27191D1FAA00528292 /* VideoRangeSlider.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = VideoRangeSlider.podspec; path = ../../VideoRangeSlider.podspec; sourceTree = "<group>"; };
+		9EDFED2D191D4CAE00528292 /* IMG_0073.MOV */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = IMG_0073.MOV; path = ../../../../../Desktop/IMG_0073.MOV; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +134,8 @@
 		842D008E16F7064700BC2959 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9EDFED2D191D4CAE00528292 /* IMG_0073.MOV */,
+				9EDFED27191D1FAA00528292 /* VideoRangeSlider.podspec */,
 				842D00C016F70AF500BC2959 /* thaiPhuketKaronBeach.MOV */,
 				842D008F16F7064700BC2959 /* SAVideoRangeSliderExample-Info.plist */,
 				842D009016F7064700BC2959 /* InfoPlist.strings */,
@@ -215,7 +221,9 @@
 				842D009E16F7064700BC2959 /* Default-568h@2x.png in Resources */,
 				842D00A416F7064700BC2959 /* ViewController_iPhone.xib in Resources */,
 				842D00A716F7064700BC2959 /* ViewController_iPad.xib in Resources */,
+				9EDFED28191D1FAA00528292 /* VideoRangeSlider.podspec in Resources */,
 				842D00C116F70AF500BC2959 /* thaiPhuketKaronBeach.MOV in Resources */,
+				9EDFED2E191D4CAE00528292 /* IMG_0073.MOV in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
