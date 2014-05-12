@@ -45,7 +45,8 @@
 @property (nonatomic, strong) UIView *bottomBorder;
 @property (nonatomic, assign) NSInteger maxGap;
 @property (nonatomic, assign) NSInteger minGap;
-
+@property (nonatomic, assign) BOOL isPlaying;
+@property (nonatomic, assign) NSInteger picWidth;
 
 - (id)initWithFrame:(CGRect)frame videoUrl:(NSURL *)videoUrl;
 - (void)setPopoverBubbleSize: (CGFloat) width height:(CGFloat)height;

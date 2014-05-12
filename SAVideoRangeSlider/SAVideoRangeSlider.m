@@ -30,6 +30,7 @@
 @property (nonatomic, strong) AVAssetImageGenerator *imageGenerator;
 @property (nonatomic, strong) UIView *bgView;
 @property (nonatomic, strong) UIView *centerView;
+@property (nonatomic, strong) UIImageView *pinView;
 @property (nonatomic, strong) NSURL *videoUrl;
 @property (nonatomic, strong) SASliderLeft *leftThumb;
 @property (nonatomic, strong) SASliderRight *rightThumb;
@@ -62,6 +63,8 @@
         
         _videoUrl = videoUrl;
         
+//        self.pinView.hidden=YES;
+//        [self addSubview:self.pinView];
         
         _topBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, SLIDER_BORDERS_SIZE)];
         _topBorder.backgroundColor = [UIColor colorWithRed: 0.996 green: 0.951 blue: 0.502 alpha: 1];
@@ -141,6 +144,15 @@
     return self;
 }
 
+- (UIImageView *)pinView{
+    if(!_pinView){
+        _pinView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 7,self.frame.size.height)];
+        _pinView.backgroundColor=[UIColor whiteColor];
+    }
+    return _pinView;
+}
+ 
+
 
 -(void)setPopoverBubbleSize: (CGFloat) width height:(CGFloat)height{
     
@@ -173,6 +185,14 @@
 - (void)delegateNotification
 {
     if ([_delegate respondsToSelector:@selector(videoRange:didChangeLeftPosition:rightPosition:)]){
+        if(self.isPlaying){
+            self.pinView.hidden=NO;
+            CGRect position=self.pinView.frame;
+            position.origin.x=self.leftThumb.frame.origin.x+5;
+            self.pinView.frame=position;
+        }else{
+            self.pinView.hidden=YES;
+        }
         [_delegate videoRange:self didChangeLeftPosition:self.leftPosition rightPosition:self.rightPosition];
     }
     
@@ -303,19 +323,11 @@
 - (void)layoutSubviews
 {
     CGFloat inset = _leftThumb.frame.size.width / 2;
-    
     _leftThumb.center = CGPointMake(_leftPosition+inset, _leftThumb.frame.size.height/2);
-    
     _rightThumb.center = CGPointMake(_rightPosition-inset, _rightThumb.frame.size.height/2);
-    
     _topBorder.frame = CGRectMake(_leftThumb.frame.origin.x + _leftThumb.frame.size.width, 0, _rightThumb.frame.origin.x - _leftThumb.frame.origin.x - _leftThumb.frame.size.width/2, SLIDER_BORDERS_SIZE);
-    
     _bottomBorder.frame = CGRectMake(_leftThumb.frame.origin.x + _leftThumb.frame.size.width, _bgView.frame.size.height-SLIDER_BORDERS_SIZE, _rightThumb.frame.origin.x - _leftThumb.frame.origin.x - _leftThumb.frame.size.width/2, SLIDER_BORDERS_SIZE);
-    
-    
     _centerView.frame = CGRectMake(_leftThumb.frame.origin.x + _leftThumb.frame.size.width, _centerView.frame.origin.y, _rightThumb.frame.origin.x - _leftThumb.frame.origin.x - _leftThumb.frame.size.width, _centerView.frame.size.height);
-    
-    
     CGRect frame = _popoverBubble.frame;
     frame.origin.x = _centerView.frame.origin.x+_centerView.frame.size.width/2-frame.size.width/2;
     _popoverBubble.frame = frame;
@@ -337,11 +349,13 @@
         self.imageGenerator.maximumSize = CGSizeMake(_bgView.frame.size.width, _bgView.frame.size.height);
     }
     
-    int picWidth = 20;
+    int picWidth = 30;
+    if(self.picWidth)
+        picWidth=self.picWidth;
     
     // First image
-    NSError *error;
-    CMTime actualTime;
+ __block   NSError *error;
+ __block   CMTime actualTime;
     CGImageRef halfWayImage = [self.imageGenerator copyCGImageAtTime:kCMTimeZero actualTime:&actualTime error:&error];
     if (halfWayImage != NULL) {
         UIImage *videoScreen;
@@ -366,11 +380,12 @@
     
     NSMutableArray *allTimes = [[NSMutableArray alloc] init];
     
-    int time4Pic = 0;
-    
+  __block  int time4Pic = 0;
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0){
         // Bug iOS7 - generateCGImagesAsynchronouslyForTimes
-        int prefreWidth=0;
+        
+        __block    int prefreWidth=0;
+
         for (int i=1, ii=1; i<picsCnt; i++){
             time4Pic = i*picWidth;
             
@@ -423,7 +438,6 @@
             CGImageRelease(halfWayImage);
             
         }
-        
         
         return;
     }
