@@ -342,6 +342,7 @@
     
     AVAsset *myAsset = [[AVURLAsset alloc] initWithURL:_videoUrl options:nil];
     self.imageGenerator = [AVAssetImageGenerator assetImageGeneratorWithAsset:myAsset];
+    self.imageGenerator.appliesPreferredTrackTransform=YES;
     
     if ([self isRetina]){
         self.imageGenerator.maximumSize = CGSizeMake(_bgView.frame.size.width*2, _bgView.frame.size.height*2);
@@ -349,7 +350,7 @@
         self.imageGenerator.maximumSize = CGSizeMake(_bgView.frame.size.width, _bgView.frame.size.height);
     }
     
-    int picWidth = 30;
+    int picWidth = 49;
     if(self.picWidth)
         picWidth=self.picWidth;
     
@@ -365,9 +366,9 @@
             videoScreen = [[UIImage alloc] initWithCGImage:halfWayImage];
         }
         UIImageView *tmp = [[UIImageView alloc] initWithImage:videoScreen];
-        CGRect rect=tmp.frame;
-        rect.size.width=picWidth;
-        tmp.frame=rect;
+//        CGRect rect=tmp.frame;
+//        rect.size.width=picWidth;
+//        tmp.frame=rect;
         [_bgView addSubview:tmp];
         picWidth = tmp.frame.size.width;
         CGImageRelease(halfWayImage);
@@ -384,7 +385,6 @@
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0){
         // Bug iOS7 - generateCGImagesAsynchronouslyForTimes
         
-        __block    int prefreWidth=0;
 
         for (int i=1, ii=1; i<picsCnt; i++){
             time4Pic = i*picWidth;
@@ -404,36 +404,24 @@
             }
             
             
-            
             UIImageView *tmp = [[UIImageView alloc] initWithImage:videoScreen];
             
+            int all = (ii+1)*tmp.frame.size.width;
             
             
             CGRect currentFrame = tmp.frame;
-            currentFrame.origin.x = ii*picWidth;
-
-            currentFrame.size.width=picWidth;
-            prefreWidth+=currentFrame.size.width;
-            
-            if( i == picsCnt-1){
-                currentFrame.size.width-=6;
-            }
-            tmp.frame = currentFrame;
-            int all = (ii+1)*tmp.frame.size.width;
-
+            currentFrame.origin.x = ii*currentFrame.size.width;
             if (all > _bgView.frame.size.width){
                 int delta = all - _bgView.frame.size.width;
                 currentFrame.size.width -= delta;
             }
-
+            tmp.frame = currentFrame;
             ii++;
+
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [_bgView addSubview:tmp];
             });
-            
-            
-            
             
             CGImageRelease(halfWayImage);
             
