@@ -337,115 +337,29 @@
         self.imageGenerator.maximumSize = CGSizeMake(_bgView.frame.size.width, _bgView.frame.size.height);
     }
     
+    // Make Times
     int picWidth = 20;
-    
-    // First image
-    NSError *error;
-    CMTime actualTime;
-    CGImageRef halfWayImage = [self.imageGenerator copyCGImageAtTime:kCMTimeZero actualTime:&actualTime error:&error];
-    if (halfWayImage != NULL) {
-        UIImage *videoScreen;
-        if ([self isRetina]){
-            videoScreen = [[UIImage alloc] initWithCGImage:halfWayImage scale:2.0 orientation:UIImageOrientationUp];
-        } else {
-            videoScreen = [[UIImage alloc] initWithCGImage:halfWayImage];
-        }
-        UIImageView *tmp = [[UIImageView alloc] initWithImage:videoScreen];
-        CGRect rect=tmp.frame;
-        rect.size.width=picWidth;
-        tmp.frame=rect;
-        [_bgView addSubview:tmp];
-        picWidth = tmp.frame.size.width;
-        CGImageRelease(halfWayImage);
-    }
-    
-    
     _durationSeconds = CMTimeGetSeconds([myAsset duration]);
-    
     int picsCnt = ceil(_bgView.frame.size.width / picWidth);
-    
     NSMutableArray *allTimes = [[NSMutableArray alloc] init];
-    
     int time4Pic = 0;
-    
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0){
-        // Bug iOS7 - generateCGImagesAsynchronouslyForTimes
-        int prefreWidth=0;
-        for (int i=1, ii=1; i<picsCnt; i++){
-            time4Pic = i*picWidth;
-            
-            CMTime timeFrame = CMTimeMakeWithSeconds(_durationSeconds*time4Pic/_bgView.frame.size.width, 600);
-            
-            [allTimes addObject:[NSValue valueWithCMTime:timeFrame]];
-            
-            
-            CGImageRef halfWayImage = [self.imageGenerator copyCGImageAtTime:timeFrame actualTime:&actualTime error:&error];
-            
-            UIImage *videoScreen;
-            if ([self isRetina]){
-                videoScreen = [[UIImage alloc] initWithCGImage:halfWayImage scale:2.0 orientation:UIImageOrientationUp];
-            } else {
-                videoScreen = [[UIImage alloc] initWithCGImage:halfWayImage];
-            }
-            
-            
-            
-            UIImageView *tmp = [[UIImageView alloc] initWithImage:videoScreen];
-            
-            
-            
-            CGRect currentFrame = tmp.frame;
-            currentFrame.origin.x = ii*picWidth;
-
-            currentFrame.size.width=picWidth;
-            prefreWidth+=currentFrame.size.width;
-            
-            if( i == picsCnt-1){
-                currentFrame.size.width-=6;
-            }
-            tmp.frame = currentFrame;
-            int all = (ii+1)*tmp.frame.size.width;
-
-            if (all > _bgView.frame.size.width){
-                int delta = all - _bgView.frame.size.width;
-                currentFrame.size.width -= delta;
-            }
-
-            ii++;
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [_bgView addSubview:tmp];
-            });
-            
-            
-            
-            
-            CGImageRelease(halfWayImage);
-            
-        }
-        
-        
-        return;
-    }
-    
-    for (int i=1; i<picsCnt; i++){
+    for (int i=0; i<picsCnt; i++){
         time4Pic = i*picWidth;
-        
         CMTime timeFrame = CMTimeMakeWithSeconds(_durationSeconds*time4Pic/_bgView.frame.size.width, 600);
-        
         [allTimes addObject:[NSValue valueWithCMTime:timeFrame]];
     }
-    
     NSArray *times = allTimes;
     
-    __block int i = 1;
+    // Set image frame widths
+    CGFloat realwidth = _bgView.frame.size.width/(CGFloat)picsCnt;
+    
+    __block int i = 0;
     
     [self.imageGenerator generateCGImagesAsynchronouslyForTimes:times
                                               completionHandler:^(CMTime requestedTime, CGImageRef image, CMTime actualTime,
                                                                   AVAssetImageGeneratorResult result, NSError *error) {
                                                   
                                                   if (result == AVAssetImageGeneratorSucceeded) {
-                                                      
                                                       
                                                       UIImage *videoScreen;
                                                       if ([self isRetina]){
@@ -454,25 +368,18 @@
                                                           videoScreen = [[UIImage alloc] initWithCGImage:image];
                                                       }
                                                       
-                                                      
-                                                      UIImageView *tmp = [[UIImageView alloc] initWithImage:videoScreen];
-                                                      
-                                                      int all = (i+1)*tmp.frame.size.width;
-                                                      
-                                                      
-                                                      CGRect currentFrame = tmp.frame;
-                                                      currentFrame.origin.x = i*currentFrame.size.width;
-                                                      if (all > _bgView.frame.size.width){
-                                                          int delta = all - _bgView.frame.size.width;
-                                                          currentFrame.size.width -= delta;
-                                                      }
-                                                      tmp.frame = currentFrame;
-                                                      i++;
-                                                      
                                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                                          UIImageView *tmp = [[UIImageView alloc] init];
+                                                          tmp.clipsToBounds = YES;
+                                                          tmp.frame = CGRectMake(i*realwidth, 0, realwidth, _bgView.bounds.size.height);
+                                                          tmp.contentMode = UIViewContentModeScaleAspectFill;
+                                                          tmp.image = videoScreen;
+                                                          
+                                                          //NSLog(@"FRAME - %f %f %f %f %@",tmp.frame.origin.x, tmp.frame.origin.y, tmp.frame.size.width, tmp.frame.size.height, [NSValue valueWithCMTime:actualTime]);
+                                                          
+                                                          i++;
                                                           [_bgView addSubview:tmp];
                                                       });
-                                                      
                                                   }
                                                   
                                                   if (result == AVAssetImageGeneratorFailed) {
