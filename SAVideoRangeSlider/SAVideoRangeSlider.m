@@ -325,8 +325,8 @@
 
 
 #pragma mark - Video
-
--(void)getMovieFrame{
+- (void)getMovieFrame
+{
     
     AVAsset *myAsset = [[AVURLAsset alloc] initWithURL:_videoUrl options:nil];
     self.imageGenerator = [AVAssetImageGenerator assetImageGeneratorWithAsset:myAsset];
@@ -390,7 +390,6 @@
                                                   }
                                               }];
 }
-
 
 
 
