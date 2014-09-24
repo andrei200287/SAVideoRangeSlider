@@ -124,7 +124,7 @@
         _bubleText.font = [UIFont boldSystemFontOfSize:20];
         _bubleText.backgroundColor = [UIColor clearColor];
         _bubleText.textColor = [UIColor blackColor];
-        _bubleText.textAlignment = UITextAlignmentCenter;
+        _bubleText.textAlignment = NSTextAlignmentCenter;
         
         [_popoverBubble addSubview:_bubleText];
         
@@ -352,7 +352,7 @@
     
     int picWidth = 49;
     if(self.picWidth)
-        picWidth=self.picWidth;
+        picWidth= (int)self.picWidth;
     
     // First image
  __block   NSError *error;
@@ -366,9 +366,6 @@
             videoScreen = [[UIImage alloc] initWithCGImage:halfWayImage];
         }
         UIImageView *tmp = [[UIImageView alloc] initWithImage:videoScreen];
-//        CGRect rect=tmp.frame;
-//        rect.size.width=picWidth;
-//        tmp.frame=rect;
         [_bgView addSubview:tmp];
         picWidth = tmp.frame.size.width;
         CGImageRelease(halfWayImage);
@@ -553,8 +550,8 @@
 - (NSString *)timeToStr:(CGFloat)time
 {
     // time - seconds
-    NSInteger min = floor(time / 60);
-    NSInteger sec = floor(time - min * 60);
+    int min = floor(time / 60);
+    int sec = floor(time - min * 60);
     NSString *minStr = [NSString stringWithFormat:min >= 10 ? @"%i" : @"0%i", min];
     NSString *secStr = [NSString stringWithFormat:sec >= 10 ? @"%i" : @"0%i", sec];
     return [NSString stringWithFormat:@"%@:%@", minStr, secStr];
