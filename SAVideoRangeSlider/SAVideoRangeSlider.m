@@ -374,7 +374,6 @@
     
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0){
         // Bug iOS7 - generateCGImagesAsynchronouslyForTimes
-        int prefreWidth=0;
         for (int i=1, ii=1; i<picsCnt; i++){
             int thisPicWidth = picWidth;
             if (remainderWidth > 0)
@@ -409,7 +408,6 @@
             frameOrigin += thisPicWidth;
             
             currentFrame.size.width = thisPicWidth;
-            prefreWidth += currentFrame.size.width;
             tmp.frame = currentFrame;
 
             ii++;
