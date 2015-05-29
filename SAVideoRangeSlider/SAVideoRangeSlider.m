@@ -338,7 +338,7 @@
     }
     
     //If you'd rather specify the number of pics, just set picsCnt manually
-    int picWidth = 40;
+    int picWidth = 20;
     int picsCnt = ceil(_bgView.frame.size.width / picWidth);
     picWidth = _bgView.frame.size.width / picsCnt;
     int remainderWidth = _bgView.frame.size.width - (picsCnt * picWidth);
