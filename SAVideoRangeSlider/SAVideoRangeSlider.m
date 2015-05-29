@@ -337,7 +337,11 @@
         self.imageGenerator.maximumSize = CGSizeMake(_bgView.frame.size.width, _bgView.frame.size.height);
     }
     
-    int picWidth = 20;
+    //If you'd rather specify the number of pics, just set picsCnt manually
+    int picWidth = 40;
+    int picsCnt = ceil(_bgView.frame.size.width / picWidth);
+    picWidth = _bgView.frame.size.width / picsCnt;
+    int remainderWidth = _bgView.frame.size.width - (picsCnt * picWidth);
     
     // First image
     NSError *error;
@@ -362,17 +366,23 @@
     
     _durationSeconds = CMTimeGetSeconds([myAsset duration]);
     
-    int picsCnt = ceil(_bgView.frame.size.width / picWidth);
     
     NSMutableArray *allTimes = [[NSMutableArray alloc] init];
     
     int time4Pic = 0;
+    int frameOrigin = picWidth;
     
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0){
         // Bug iOS7 - generateCGImagesAsynchronouslyForTimes
         int prefreWidth=0;
         for (int i=1, ii=1; i<picsCnt; i++){
-            time4Pic = i*picWidth;
+            int thisPicWidth = picWidth;
+            if (remainderWidth > 0)
+            {
+                thisPicWidth++;
+                remainderWidth--;
+            }
+            time4Pic = frameOrigin;
             
             CMTime timeFrame = CMTimeMakeWithSeconds(_durationSeconds*time4Pic/_bgView.frame.size.width, 600);
             
@@ -395,21 +405,12 @@
             
             
             CGRect currentFrame = tmp.frame;
-            currentFrame.origin.x = ii*picWidth;
-
-            currentFrame.size.width=picWidth;
-            prefreWidth+=currentFrame.size.width;
+            currentFrame.origin.x = frameOrigin;
+            frameOrigin += thisPicWidth;
             
-            if( i == picsCnt-1){
-                currentFrame.size.width-=6;
-            }
+            currentFrame.size.width = thisPicWidth;
+            prefreWidth += currentFrame.size.width;
             tmp.frame = currentFrame;
-            int all = (ii+1)*tmp.frame.size.width;
-
-            if (all > _bgView.frame.size.width){
-                int delta = all - _bgView.frame.size.width;
-                currentFrame.size.width -= delta;
-            }
 
             ii++;
             
