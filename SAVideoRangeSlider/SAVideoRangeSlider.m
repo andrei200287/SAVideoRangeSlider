@@ -44,10 +44,11 @@
 
 #define SLIDER_BORDERS_SIZE 6.0f
 #define BG_VIEW_BORDERS_SIZE 3.0f
+#define FRAME_IMAGEVIEW_CONTENT_MODE UIViewContentModeScaleAspectFill
+
 
 
 - (id)initWithFrame:(CGRect)frame videoUrl:(NSURL *)videoUrl{
-    
     self = [super initWithFrame:frame];
     if (self) {
         
@@ -351,11 +352,14 @@
             videoScreen = [[UIImage alloc] initWithCGImage:halfWayImage];
         }
         UIImageView *tmp = [[UIImageView alloc] initWithImage:videoScreen];
+        tmp.contentMode = FRAME_IMAGEVIEW_CONTENT_MODE;
+        [tmp.layer setMasksToBounds:YES];
+        
         CGRect rect=tmp.frame;
         rect.size.width=picWidth;
         tmp.frame=rect;
         [_bgView addSubview:tmp];
-        picWidth = tmp.frame.size.width;
+//        picWidth = tmp.frame.size.width;
         CGImageRelease(halfWayImage);
     }
     
@@ -391,7 +395,8 @@
             
             
             UIImageView *tmp = [[UIImageView alloc] initWithImage:videoScreen];
-            
+            tmp.contentMode = FRAME_IMAGEVIEW_CONTENT_MODE;
+            [tmp.layer setMasksToBounds:YES];
             
             
             CGRect currentFrame = tmp.frame;
@@ -456,6 +461,8 @@
                                                       
                                                       
                                                       UIImageView *tmp = [[UIImageView alloc] initWithImage:videoScreen];
+                                                      tmp.contentMode = FRAME_IMAGEVIEW_CONTENT_MODE;
+                                                      [tmp.layer setMasksToBounds:YES];
                                                       
                                                       int all = (i+1)*tmp.frame.size.width;
                                                       
