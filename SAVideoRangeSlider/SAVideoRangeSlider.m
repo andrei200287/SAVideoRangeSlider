@@ -45,7 +45,7 @@
 #define SLIDER_BORDERS_SIZE 6.0f
 #define BG_VIEW_BORDERS_SIZE 3.0f
 #define FRAME_IMAGEVIEW_CONTENT_MODE UIViewContentModeScaleAspectFill
-
+const int FRAME_PIC_WIDTH = 20;
 
 
 - (id)initWithFrame:(CGRect)frame videoUrl:(NSURL *)videoUrl{
@@ -57,6 +57,7 @@
         int thumbWidth = ceil(frame.size.width*0.05);
         
         _bgView = [[UIControl alloc] initWithFrame:CGRectMake(thumbWidth-BG_VIEW_BORDERS_SIZE, 0, frame.size.width-(thumbWidth*2)+BG_VIEW_BORDERS_SIZE*2, frame.size.height)];
+        [_bgView.layer setMasksToBounds:YES];
         _bgView.layer.borderColor = [UIColor grayColor].CGColor;
         _bgView.layer.borderWidth = BG_VIEW_BORDERS_SIZE;
         [self addSubview:_bgView];
@@ -331,6 +332,7 @@
     
     AVAsset *myAsset = [[AVURLAsset alloc] initWithURL:_videoUrl options:nil];
     self.imageGenerator = [AVAssetImageGenerator assetImageGeneratorWithAsset:myAsset];
+    self.imageGenerator.appliesPreferredTrackTransform = YES;
     
     if ([self isRetina]){
         self.imageGenerator.maximumSize = CGSizeMake(_bgView.frame.size.width*2, _bgView.frame.size.height*2);
@@ -338,7 +340,7 @@
         self.imageGenerator.maximumSize = CGSizeMake(_bgView.frame.size.width, _bgView.frame.size.height);
     }
     
-    int picWidth = 20;
+    int picWidth = FRAME_PIC_WIDTH;
     
     // First image
     NSError *error;
@@ -355,11 +357,7 @@
         tmp.contentMode = FRAME_IMAGEVIEW_CONTENT_MODE;
         [tmp.layer setMasksToBounds:YES];
         
-        CGRect rect=tmp.frame;
-        rect.size.width=picWidth;
-        tmp.frame=rect;
         [_bgView addSubview:tmp];
-//        picWidth = tmp.frame.size.width;
         CGImageRelease(halfWayImage);
     }
     
@@ -401,20 +399,8 @@
             
             CGRect currentFrame = tmp.frame;
             currentFrame.origin.x = ii*picWidth;
-
-            currentFrame.size.width=picWidth;
             prefreWidth+=currentFrame.size.width;
-            
-            if( i == picsCnt-1){
-                currentFrame.size.width-=6;
-            }
             tmp.frame = currentFrame;
-            int all = (ii+1)*tmp.frame.size.width;
-
-            if (all > _bgView.frame.size.width){
-                int delta = all - _bgView.frame.size.width;
-                currentFrame.size.width -= delta;
-            }
 
             ii++;
             
