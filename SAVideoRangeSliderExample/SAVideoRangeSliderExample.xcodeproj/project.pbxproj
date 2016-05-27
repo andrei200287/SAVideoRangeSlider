@@ -28,7 +28,6 @@
 		842D00DA16F7A68100BC2959 /* SASliderLeft.m in Sources */ = {isa = PBXBuildFile; fileRef = 842D00D416F7A68100BC2959 /* SASliderLeft.m */; };
 		842D00DB16F7A68100BC2959 /* SASliderRight.m in Sources */ = {isa = PBXBuildFile; fileRef = 842D00D616F7A68100BC2959 /* SASliderRight.m */; };
 		842D00DC16F7A68100BC2959 /* SAVideoRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 842D00D816F7A68100BC2959 /* SAVideoRangeSlider.m */; };
-		9EDFED28191D1FAA00528292 /* VideoRangeSlider.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9EDFED27191D1FAA00528292 /* VideoRangeSlider.podspec */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -218,7 +217,6 @@
 				842D009E16F7064700BC2959 /* Default-568h@2x.png in Resources */,
 				842D00A416F7064700BC2959 /* ViewController_iPhone.xib in Resources */,
 				842D00A716F7064700BC2959 /* ViewController_iPad.xib in Resources */,
-				9EDFED28191D1FAA00528292 /* VideoRangeSlider.podspec in Resources */,
 				842D00C116F70AF500BC2959 /* thaiPhuketKaronBeach.MOV in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
