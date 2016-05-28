@@ -334,11 +334,8 @@ const int FRAME_PIC_WIDTH = 20;
     self.imageGenerator = [AVAssetImageGenerator assetImageGeneratorWithAsset:myAsset];
     self.imageGenerator.appliesPreferredTrackTransform = YES;
     
-    if ([self isRetina]){
-        self.imageGenerator.maximumSize = CGSizeMake(_bgView.frame.size.width*2, _bgView.frame.size.height*2);
-    } else {
-        self.imageGenerator.maximumSize = CGSizeMake(_bgView.frame.size.width, _bgView.frame.size.height);
-    }
+    CGFloat scale = [[UIScreen mainScreen] scale];
+    self.imageGenerator.maximumSize = CGSizeMake(_bgView.frame.size.width*scale, _bgView.frame.size.height*scale);
     
     int picWidth = FRAME_PIC_WIDTH;
     
@@ -383,13 +380,7 @@ const int FRAME_PIC_WIDTH = 20;
             
             CGImageRef halfWayImage = [self.imageGenerator copyCGImageAtTime:timeFrame actualTime:&actualTime error:&error];
             
-            UIImage *videoScreen;
-            if ([self isRetina]){
-                videoScreen = [[UIImage alloc] initWithCGImage:halfWayImage scale:2.0 orientation:UIImageOrientationUp];
-            } else {
-                videoScreen = [[UIImage alloc] initWithCGImage:halfWayImage];
-            }
-            
+            UIImage *videoScreen = [[UIImage alloc] initWithCGImage:halfWayImage scale:[[UIScreen mainScreen] scale] orientation:UIImageOrientationUp];
             
             
             UIImageView *tmp = [[UIImageView alloc] initWithImage:videoScreen];
